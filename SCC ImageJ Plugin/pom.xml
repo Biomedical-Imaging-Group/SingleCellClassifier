@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>27.0.1</version>
+		<relativePath />
+	</parent>
+
+	<groupId>ch.epfl</groupId>
+	<artifactId>Single_Cell_Classifier</artifactId>
+	<version>0.1.0</version>
+	<packaging>jar</packaging>
+
+	<name>Single Cell Classifier</name>
+	<description>Single Cell Classifier is an ImageJ/Fiji plugin that aims to classify cells based on features related to nuclei and their neighbors.</description>
+	<url>None</url>
+	<inceptionYear>2020</inceptionYear>
+	<organization>
+		<name>EPFL</name>
+		<url>http://www.epfl.ch</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>None</name>
+			<distribution>None</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>qjuppet</id>
+			<name>Quentin Juppet</name>
+			<url>https://github.com/qjuppet</url>
+			<roles>
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>None</name>
+		</contributor>
+	</contributors>
+	<mailingLists>
+		<mailingList>
+			<name>None</name>
+			<archive>None/</archive>
+		</mailingList>
+	</mailingLists>
+	<scm>
+		<url>None</url>
+	</scm>
+	<issueManagement>
+		<system>None</system>
+	</issueManagement>
+	<ciManagement>
+		<system>None</system>
+	</ciManagement>
+	
+	<properties>
+		<maven.compiler.version>1.8</maven.compiler.version>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<package-name>ch.epfl</package-name>
+		<main-class>Main</main-class>
+		<license.licenseName>None</license.licenseName>
+		<license.copyrightOwners>None</license.copyrightOwners>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>https://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej</artifactId>
+		</dependency>
+		<!-- ImageJ1 -->
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej-legacy</artifactId>
+		</dependency>
+		<!-- Clipper -->
+		<dependency>
+			<groupId>de.lighti</groupId>
+			<artifactId>Clipper</artifactId>
+			<version>6.4.2</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/Clipper-6.4.2.jar</systemPath>
+		</dependency>
+		<!-- CSBDeep -->
+		<dependency>
+			<groupId>de.csbdresden</groupId>
+			<artifactId>csbdeep</artifactId>
+			<version>0.3.5-SNAPSHOT</version>
+		</dependency>
+		<!-- StarDist -->
+		<dependency>
+			<groupId>de.csbdresden</groupId>
+			<artifactId>StarDist</artifactId>
+			<version>0.3.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/StarDist_-0.3.0.jar</systemPath>
+		</dependency>
+		<!-- MorphoLibJ -->
+		<dependency>
+			<groupId>fr.inra.ijpb</groupId>
+			<artifactId>MorphoLibJ_</artifactId>
+		</dependency>
+		<!-- GSON -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.5</version>
+		</dependency>
+	</dependencies>
+</project>
