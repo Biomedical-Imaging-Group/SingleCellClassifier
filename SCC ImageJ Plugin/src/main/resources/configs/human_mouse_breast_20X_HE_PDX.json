@@ -1,0 +1,42 @@
+{
+    "segmentation": {
+        "model_name": "Nuclei Breast 20X H&E PDX",
+        "normalize": true,
+        "independent_channels_normalization": true,
+        "normalization_percentile_low": 1,
+        "normalization_percentile_high": 99.8,
+        "prob_threshold": 0.4588574929724535,
+        "NMS_threshold": 0.3
+    },
+    "measure": {
+        "cell_thickness": 2.0,
+        "cell_thickness_unit": "um",
+        "nuclei_channels_factor": [
+            0.347061699,
+            0.420326122,
+            0.232615785
+        ],
+        "cytoplasms_channels_factor": [
+            0.210688702,
+            0.631295673,
+            0.158057692
+        ],
+        "k_neighbours": [
+            5,
+            10,
+            20,
+            40
+        ]
+    },
+    "classification": {
+        "model_name": "Human/Mouse Breast 20X H&E PDX",
+        "classes": [
+            "Mouse",
+            "Human"
+        ],
+        "classes_color": [
+            "#FF0000",
+            "#00FF00"
+        ]
+    }
+}
