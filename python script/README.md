@@ -9,7 +9,7 @@ The scripts have the following dependencies and were tested with the following v
 - tensorflow: 1.13.1
 - keras: 2.3.1
 - seaborn: 0.10.0
-- eli4: 0.10.1
+- eli5: 0.10.1
 - pandas: 1.0.3
 
 ## Segmentation example
