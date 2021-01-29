@@ -15,7 +15,7 @@ The release jar file can be found [here](/release).
 
 The plugin documentation is available [here](/documentation/plugin_documentation.pdf).
 
-You can find Python scripts to train your own models our analyze your measurements [here](/python%20script).
+You can find Python scripts to train your own models or analyze your measurements [here](/python%20script).
 You can find the data used in these scripts [here](/data).
 
 ## Existing models
