@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 
 public class TextureAnalyzer {
@@ -44,7 +45,7 @@ public class TextureAnalyzer {
 	private static double[] logValues =  new double[LOG_RESOLUTION];;
 	private static boolean[] logValuesComputed = new boolean[LOG_RESOLUTION];;
 
-	public static double[][] computeTextureFeatures(ImageProcessor ip, ImageProcessor labelImage, int maxLabel) {
+	public static double[][] computeTextureFeatures(ByteProcessor ip, ImageProcessor labelImage, int maxLabel) {
 		int[] dxs = new int[] {1, 1, 0, -1};
 		int[] dys = new int[] {0, 1, 1, 1};
 
@@ -86,7 +87,7 @@ public class TextureAnalyzer {
 			meanI += i * pI[i];
 			pIEntropy -= pI[i] * log(pI[i]);	
 		}
-		
+
 		double correlation = 0;
 		double HXY1 = 0;
 		double HXY2 = 0;
@@ -101,7 +102,7 @@ public class TextureAnalyzer {
 					HXY1 -= proba * log(pI[i] * pI[j]);
 				}
 				if(pI[j] == 0) continue;
-				
+
 				HXY2 -= pI[i] * pI[j] * log(pI[i] * pI[j]);
 			}
 			sumOfSquaresVariance += (i - meanI) * (i - meanI) * pI[i];
@@ -202,7 +203,7 @@ public class TextureAnalyzer {
 	 * @param dy displacement in the y axis (must be positive)
 	 * @return
 	 */
-	private static List<HashMap<IntensityPair, Double>> computeGLCM(ImageProcessor ip, ImageProcessor labelImage, int maxLabel, int dx, int dy){
+	private static List<HashMap<IntensityPair, Double>> computeGLCM(ByteProcessor ip, ImageProcessor labelImage, int maxLabel, int dx, int dy){
 		List<HashMap<IntensityPair, Integer>> glcm = new ArrayList<HashMap<IntensityPair, Integer>>(maxLabel);
 		for(int label = 1; label <= maxLabel; ++label) {
 			glcm.add(new HashMap<IntensityPair, Integer>());

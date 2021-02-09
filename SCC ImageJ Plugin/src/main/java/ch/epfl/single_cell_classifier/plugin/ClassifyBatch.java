@@ -34,7 +34,7 @@ import net.imagej.DatasetService;
 import net.imagej.ops.OpService;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
-import net.imglib2.type.numeric.integer.UnsignedByteType;
+import net.imglib2.type.numeric.NumericType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 
 @Plugin(type = Command.class, label = "Classify (Batch)", menu = {
@@ -61,6 +61,7 @@ public class ClassifyBatch implements Command {
 
 	@Parameter(label="Config", choices = {
 		NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+		NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 		CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
@@ -108,6 +109,7 @@ public class ClassifyBatch implements Command {
 	@Parameter(label="Classification Model", choices = {
 		MODEL_CHOICE_CONFIG,
 		NCModel.MODEL_CLASSIFICATION_HUMAN_MOUSE_HE_PDX,
+		NCModel.MODEL_CLASSIFICATION_HUMAN_MOUSE_DAPI_PDX,
 		MODEL_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String classificationModelChoice = MODEL_CHOICE_CONFIG;
@@ -181,11 +183,11 @@ public class ClassifyBatch implements Command {
 				NCConfig config = getConfig();
 				File classificationModel = getModelFile(config);
 
-				ImagePlus sourceIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedByteType>) source.getImgPlus(), "source");
+				ImagePlus sourceIp = ImageJFunctions.wrap((RandomAccessibleInterval<? extends NumericType>) source.getImgPlus(), "source");
 				ImagePlus nucleiLabelIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedShortType>) nucleiLabel.getImgPlus(), "nuclei label");
 				ImagePlus cellsLabelIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedShortType>) cellsLabel.getImgPlus(), "cells label");
 
-				MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, opService);
+				MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, datasetService, opService);
 				List<CellInformation> cells = measureExtractor.getCells();
 
 				if(verbose)

@@ -20,8 +20,8 @@ import ch.epfl.single_cell_classifier.config.NCConfig;
 import ch.epfl.single_cell_classifier.config.NCModel;
 import ch.epfl.single_cell_classifier.measure.CellInformation;
 import ch.epfl.single_cell_classifier.measure.MeasureExtractor;
-import ch.epfl.single_cell_classifier.measure.TextureAnalyzer;
 import ch.epfl.single_cell_classifier.measure.MeasureExtractor.FeatureK;
+import ch.epfl.single_cell_classifier.measure.TextureAnalyzer;
 import ch.epfl.single_cell_classifier.utils.FeatureRenderer;
 import de.csbdresden.stardist.StarDist2DAccessor;
 import ij.IJ;
@@ -29,6 +29,7 @@ import ij.ImagePlus;
 import ij.measure.ResultsTable;
 import ij.process.ByteProcessor;
 import net.imagej.Dataset;
+import net.imagej.DatasetService;
 import net.imagej.ops.OpService;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
@@ -43,6 +44,9 @@ import net.imglib2.type.numeric.integer.UnsignedShortType;
 }) 
 public class MeasureInformation implements Command{
 	@Parameter
+	protected DatasetService datasetService;
+
+	@Parameter
 	protected OpService opService;
 
 	@Parameter
@@ -52,6 +56,7 @@ public class MeasureInformation implements Command{
 
 	@Parameter(label="Config", choices = {
 		NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+		NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 		CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
@@ -169,7 +174,7 @@ public class MeasureInformation implements Command{
 
 			NCConfig config = getConfig();
 			
-			MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, opService);
+			MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, datasetService, opService);
 
 			List<CellInformation> cells = measureExtractor.getCells();
 

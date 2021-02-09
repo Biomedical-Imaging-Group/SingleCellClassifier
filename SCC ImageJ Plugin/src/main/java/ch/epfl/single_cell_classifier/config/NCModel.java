@@ -18,9 +18,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class NCModel {
-
+	
 	public static final String MODEL_SEGMENTATION_HUMAN_MOUSE_HE_PDX = "Nuclei Breast 20X H&E PDX";
 	public static final String MODEL_CLASSIFICATION_HUMAN_MOUSE_HE_PDX = "Human/Mouse Breast 20X H&E PDX";
+	public static final String MODEL_CLASSIFICATION_HUMAN_MOUSE_DAPI_PDX = "Human/Mouse Breast 20X DAPI PDX";
 
 	public static final Map<String, NCModel> SEGMENTATION_MODELS = new HashMap<String, NCModel>();
 	public static final Map<String, NCModel> CLASSIFICATION_MODELS = new HashMap<String, NCModel>();
@@ -29,6 +30,7 @@ public class NCModel {
 		SEGMENTATION_MODELS.put(MODEL_SEGMENTATION_HUMAN_MOUSE_HE_PDX, new NCModel("models/segmentation/nuclei_breast_20X_HE_PDX.zip", false));
 
 		CLASSIFICATION_MODELS.put(MODEL_CLASSIFICATION_HUMAN_MOUSE_HE_PDX, new NCModel("models/classification/human_mouse_breast_20X_HE_PDX.zip", true));
+		CLASSIFICATION_MODELS.put(MODEL_CLASSIFICATION_HUMAN_MOUSE_DAPI_PDX, new NCModel("models/classification/human_mouse_breast_20X_DAPI_PDX.zip", true));
 	}
 
 	private String modelPath;

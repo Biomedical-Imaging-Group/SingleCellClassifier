@@ -41,6 +41,7 @@ public class ConfigCreator implements Command{
 
 	@Parameter(label="Config", choices = {
 			NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+			NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 			CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
@@ -115,7 +116,8 @@ public class ConfigCreator implements Command{
 
 	@Parameter(label="Classification Model", choices = {
 			MODEL_CHOICE_NOT_DEFINED,
-			NCModel.MODEL_CLASSIFICATION_HUMAN_MOUSE_HE_PDX
+			NCModel.MODEL_CLASSIFICATION_HUMAN_MOUSE_HE_PDX,
+			NCModel.MODEL_CLASSIFICATION_HUMAN_MOUSE_DAPI_PDX
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String classificationModelChoice;
 
