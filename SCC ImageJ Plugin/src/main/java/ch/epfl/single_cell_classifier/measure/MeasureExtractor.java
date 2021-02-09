@@ -15,11 +15,13 @@ import ch.epfl.single_cell_classifier.utils.ChannelsToGrayConverter;
 import ij.ImagePlus;
 import ij.measure.Calibration;
 import ij.measure.ResultsTable;
+import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 import inra.ijpb.geometry.Ellipse;
 import inra.ijpb.measure.IntrinsicVolumes2D;
 import inra.ijpb.measure.region2d.Centroid;
 import inra.ijpb.measure.region2d.InertiaEllipse;
+import net.imagej.DatasetService;
 import net.imagej.ops.OpService;
 import net.imglib2.IterableInterval;
 import net.imglib2.RandomAccessibleInterval;
@@ -88,7 +90,7 @@ public class MeasureExtractor {
 		}
 	}
 	
-	public MeasureExtractor(NCConfig config, ImagePlus source, ImagePlus nucleiLabel, ImagePlus cellsLabel, OpService opService) {
+	public MeasureExtractor(NCConfig config, ImagePlus source, ImagePlus nucleiLabel, ImagePlus cellsLabel, DatasetService datasetService, OpService opService) {
 		initClassificationHeaders(config);
 		
 		int maxLabel = (int) nucleiLabel.getStatistics().max;
@@ -98,16 +100,16 @@ public class MeasureExtractor {
 			labels[label - 1] = label;
 		}
 
-		ImagePlus nucleiGraySource = ChannelsToGrayConverter.convert(source, config.getNucleiChannelsFactor());
-		ImagePlus cytoplasmGraySource = ChannelsToGrayConverter.convert(source, config.getCytoplasmsChannelsFactor());
+		ImagePlus nucleiGraySource = ChannelsToGrayConverter.convert(source, config.getNucleiChannelsFactor(), datasetService, opService);
+		ImagePlus cytoplasmGraySource = ChannelsToGrayConverter.convert(source, config.getCytoplasmsChannelsFactor(), datasetService, opService);
 
 		ImagePlus cytoplasmLabel = getCytoplasmLabels(nucleiLabel, cellsLabel, opService);
 		
 		ImageProcessor nucleiLabelIp = nucleiLabel.getProcessor();
 		ImageProcessor cellsLabelIp = cellsLabel.getProcessor();
 		ImageProcessor cytoplasmLabelIp = cytoplasmLabel.getProcessor();
-		ImageProcessor nucleiGraySourceIp = nucleiGraySource.getProcessor();
-		ImageProcessor cytoplasmGraySourceIp = cytoplasmGraySource.getProcessor();
+		ByteProcessor nucleiGraySourceIp = (ByteProcessor) nucleiGraySource.getProcessor();
+		ByteProcessor cytoplasmGraySourceIp = (ByteProcessor) cytoplasmGraySource.getProcessor();
 		
 		Ellipse[] nucleiEllipses = InertiaEllipse.inertiaEllipses(nucleiLabelIp, labels, new Calibration());
 		Ellipse[] cellsEllipses = InertiaEllipse.inertiaEllipses(cellsLabelIp, labels, new Calibration());

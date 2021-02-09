@@ -15,6 +15,8 @@ import ch.epfl.single_cell_classifier.config.NCConfig;
 import ch.epfl.single_cell_classifier.utils.ChannelsToGrayConverter;
 import ij.ImagePlus;
 import net.imagej.Dataset;
+import net.imagej.DatasetService;
+import net.imagej.ops.OpService;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
 import net.imglib2.type.numeric.NumericType;
@@ -26,6 +28,12 @@ import net.imglib2.type.numeric.NumericType;
 		@Menu(label = "Get Gray Level", weight = 3)
 }) 
 public class GetGrayLevel implements Command{
+	@Parameter
+	protected DatasetService datasetService;
+
+	@Parameter
+	protected OpService opService;
+
 	@Parameter(label="Source")
 	private Dataset source;
 
@@ -33,6 +41,7 @@ public class GetGrayLevel implements Command{
 
 	@Parameter(label="Config", choices = {
 		NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+		NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 		CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
@@ -59,9 +68,9 @@ public class GetGrayLevel implements Command{
 		ImagePlus sourceIp = ImageJFunctions.wrap((RandomAccessibleInterval<? extends NumericType>) source.getImgPlus(), "source");
 		
 		if(weightType.equals(WEIGHT_TYPE_NUCLEI))
-			graySource = ChannelsToGrayConverter.convert(sourceIp, config.getNucleiChannelsFactor());
+			graySource = ChannelsToGrayConverter.convert(sourceIp, config.getNucleiChannelsFactor(), datasetService, opService);
 		else if(weightType.equals(WEIGHT_TYPE_CYTOPLASMS))
-			graySource = ChannelsToGrayConverter.convert(sourceIp, config.getCytoplasmsChannelsFactor());
+			graySource = ChannelsToGrayConverter.convert(sourceIp, config.getCytoplasmsChannelsFactor(), datasetService, opService);
 	}
 
 	private NCConfig getConfig() {

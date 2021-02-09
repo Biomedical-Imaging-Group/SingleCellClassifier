@@ -25,9 +25,11 @@ import de.csbdresden.stardist.StarDist2DAccessor;
 import ij.IJ;
 import ij.ImagePlus;
 import net.imagej.Dataset;
+import net.imagej.DatasetService;
 import net.imagej.ops.OpService;
 import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.img.display.imagej.ImageJFunctions;
+import net.imglib2.type.numeric.NumericType;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.type.numeric.integer.UnsignedShortType;
 
@@ -38,6 +40,9 @@ import net.imglib2.type.numeric.integer.UnsignedShortType;
 		@Menu(label = "Collect Information (Batch)", weight = 2)
 }) 
 public class CollectInformation implements Command {
+
+	@Parameter
+	protected DatasetService datasetService;
 
 	@Parameter
 	protected OpService opService;
@@ -52,6 +57,7 @@ public class CollectInformation implements Command {
 
 	@Parameter(label="Config", choices = {
 			NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+			NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 			CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
@@ -155,11 +161,11 @@ public class CollectInformation implements Command {
 
 				NCConfig config = getConfig();
 
-				ImagePlus sourceIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedByteType>) source.getImgPlus(), "source");
+				ImagePlus sourceIp = ImageJFunctions.wrap((RandomAccessibleInterval<? extends NumericType>) source.getImgPlus(), "source");
 				ImagePlus nucleiLabelIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedShortType>) nucleiLabel.getImgPlus(), "nuclei label");
 				ImagePlus cellsLabelIp = ImageJFunctions.wrap((RandomAccessibleInterval<UnsignedShortType>) cellsLabel.getImgPlus(), "cells label");
 
-				MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, opService);
+				MeasureExtractor measureExtractor = new MeasureExtractor(config, sourceIp, nucleiLabelIp, cellsLabelIp, datasetService, opService);
 
 				boolean addClassToMeasure = false;
 				if(classesMaskDirectory != null) {

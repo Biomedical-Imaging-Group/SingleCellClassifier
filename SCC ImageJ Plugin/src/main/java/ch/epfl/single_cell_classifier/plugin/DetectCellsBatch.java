@@ -41,6 +41,7 @@ public class DetectCellsBatch implements Command {
 
 	@Parameter(label="Config", choices = {
 		NCConfig.CONFIG_HUMAN_MOUSE_HE_PDX,
+		NCConfig.CONFIG_HUMAN_MOUSE_DAPI_PDX,
 		CONFIG_CHOICE_FILE
 	}, style=ChoiceWidget.LIST_BOX_STYLE)
 	private String configChoice;
