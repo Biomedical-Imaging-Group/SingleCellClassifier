@@ -9,7 +9,7 @@ This example show the classification (middle) of an H&E image (left) and the flu
 
 ## Release
 
-The release jar file can be found [here](/release).
+The release jar files can be found [here](/release).
 
 ## Documentation and examples
 
@@ -35,3 +35,4 @@ The following models are included in the plugin:
 ### Classification
 
 - *Human/Mouse Breast 20X H&E PDX*: Human/Mouse classification for Breast 20X H&E PDX models.
+- *Human/Mouse Breast 20X DAPI PDX*: Human/Mouse classification for Breast 20X DAPI PDX models.
